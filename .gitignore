@@ -159,4 +159,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# Config file containing the API Key for GeoApify
 config.ini
+
+# Collections database formatted as a CSV containing all collections and their projects
+collections.csv
