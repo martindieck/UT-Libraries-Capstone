@@ -9,7 +9,7 @@ def geocode_to_url(address, country_code):
     # API connection parameters
     api_key = config.get('geocoding', 'API_KEY')
     encoded_address = quote(address)
-    url = f"https://api.geoapify.com/v1/geocode/search?text={encoded_address}&filter=countrycode:{country_code}&apiKey={api_key}"
+    url = f"https://api.geoapify.com/v1/geocode/search?text={encoded_address}&bias=countrycode:{country_code}&apiKey={api_key}"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -27,7 +27,7 @@ def geocode_to_coords(address, country_code):
     # API connection parameters
     api_key = config.get('geocoding', 'API_KEY')
     encoded_address = quote(address)
-    url = f"https://api.geoapify.com/v1/geocode/search?text={encoded_address}&filter=countrycode:{country_code}&apiKey={api_key}"
+    url = f"https://api.geoapify.com/v1/geocode/search?text={encoded_address}&bias=countrycode:{country_code}&apiKey={api_key}"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -45,7 +45,7 @@ def geocode_complete(address, country_code):
     # API connection parameters
     api_key = config.get('geocoding', 'API_KEY')
     encoded_address = quote(address)
-    url = f"https://api.geoapify.com/v1/geocode/search?text={encoded_address}&filter=countrycode:{country_code}&apiKey={api_key}"
+    url = f"https://api.geoapify.com/v1/geocode/search?text={encoded_address}&bias=countrycode:{country_code}&apiKey={api_key}"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -57,4 +57,4 @@ def geocode_complete(address, country_code):
     else:
         print(f"GET request failed with status code {response.status_code}")
 
-#geocode_to_url("", "none")
+# geocode_to_url("", "us")
