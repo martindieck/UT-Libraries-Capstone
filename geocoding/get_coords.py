@@ -1,18 +1,19 @@
 import pandas as pd
 import numpy as np
 import csv
+from tqdm import tqdm
 from countrycode import get_country_code
 from geocoding import geocode_complete
 from get_collection import get_collection
 
-collection_code = ""
+collection_code = "DAHL"
 
 field_names = ["ID", "Project", "Latitude", "Longitude", "Link"]
 geocoded_collection = []
 
 collection_df = get_collection(collection_code)
 
-for index, row in collection_df.iterrows():
+for index, row in tqdm(collection_df.iterrows(), total=len(collection_df)):
     row_dict = {}
     unique_id = row["unique ID"]
     project_name = row["Project name"]
