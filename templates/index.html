@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Coordinates</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Verify Coordinates</h1>
+    <p><strong>{{ message }}</strong></p>
+    <p><strong>Project Name:</strong> {{ row.Project }}</p>
+    <p><strong>Address:</strong> {{ row.Address }}</p>
+    <p><strong>City:</strong> {{ row.City }}</p>
+    <p><strong>State:</strong> {{ row.State }}</p>
+    <p><strong>County:</strong> {{ row.County }}</p>
+    <p><strong>Country:</strong> {{ row.Country }}</p>
+    <form action="/submit" method="post">
+        <input type="hidden" name="row_id" value="{{ row_index }}">
+        <div class="button-container">
+            <button class="correct" type="submit" name="response" value="Correct">Correct</button>
+            <button class="unsure" type="submit" name="response" value="Unsure">Unsure</button>
+            <button class="incorrect" type="submit" name="response" value="Incorrect">Incorrect</button>
+        </div>
+    </form>
+    <iframe width="1000" height="500" style="border:0" loading="lazy" allowfullscreen
+    src="https://www.google.com/maps/embed/v1/search?q={{ row.Latitude }}%2C{{ row.Longitude }}&key={{ api_key }}"></iframe>
+</body>
+</html>
