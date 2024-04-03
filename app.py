@@ -44,10 +44,12 @@ def submit():
 
     response = request.form['response']
     row_id = int(request.form['row_id'])
+    notes = request.form['notes']
 
     data = read_csv('data.csv')
 
     data[row_id]['Validation'] = response
+    data[row_id]['Notes'] = notes
 
     write_csv('data.csv', data)
 

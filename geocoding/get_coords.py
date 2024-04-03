@@ -8,7 +8,7 @@ from get_collection import get_collection
 
 collection_code = "FG"
 
-field_names = ["ID", "Project", "Address", "City", "State", "County", "Country", "Latitude", "Longitude", "Link", "Validation"]
+field_names = ["ID", "Project", "Address", "City", "State", "County", "Country", "Latitude", "Longitude", "Link", "Validation", "Notes"]
 geocoded_collection = []
 
 collection_df = get_collection(collection_code)
@@ -42,6 +42,7 @@ for index, row in tqdm(collection_df.iterrows(), total=len(collection_df)):
     row_dict["Longitude"] = longitude
     row_dict["Link"] = link
     row_dict["Validation"] = ""
+    row_dict["Notes"] = ""
     geocoded_collection.append(row_dict)
 
 with open(collection_code + '.csv', 'w') as csvfile:

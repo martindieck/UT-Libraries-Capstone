@@ -15,8 +15,10 @@
     <p><strong>State:</strong> {{ row.State }}</p>
     <p><strong>County:</strong> {{ row.County }}</p>
     <p><strong>Country:</strong> {{ row.Country }}</p>
+    <p><strong>Notes:</strong></p>
     <form action="/submit" method="post">
         <input type="hidden" name="row_id" value="{{ row_index }}">
+        <textarea name="notes" rows="4" cols="50">{{ row.Notes }}</textarea>
         <div class="button-container">
             <button class="correct" type="submit" name="response" value="Correct">Correct</button>
             <button class="unsure" type="submit" name="response" value="Unsure">Unsure</button>

@@ -19,7 +19,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin-bottom: 20px;
-    font-size: large;
+    font-size: 16px;
 }
 
 .button-container {
@@ -57,4 +57,24 @@ html {
 body {
     display: table-cell;
     vertical-align: middle;
+}
+
+textarea {
+    width: 40%;
+    height: 100px;
+    padding: 15px;
+    margin: 15px auto; /* Center the textarea */
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: vertical;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+}
+
+textarea:focus {
+    outline: none; /* Remove the default focus outline */
+    border-color: #007bff; /* Change border color when focused */
 }
