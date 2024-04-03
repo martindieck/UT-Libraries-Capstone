@@ -24,6 +24,7 @@ for index, row in tqdm(collection_df.iterrows(), total=len(collection_df)):
         link = ""
     else:
         address_list = [row["Project name"], row["Street address"], row["City"], row["County"], row["State/Province"], row["Country"]]
+        address = [i for i in address_list if i != ""]
         address = ", ".join(address_list)
         normal_address, latitude, longitude, link = geocode_complete(address)
     row_dict["ID"] = unique_id

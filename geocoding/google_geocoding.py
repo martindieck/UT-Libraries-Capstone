@@ -12,13 +12,19 @@ def geocode_complete(address):
 
     try:
         normal_address = geocode_result[0]["formatted_address"]
-        lat = geocode_result[0]["geometry"]["location"]["lat"]
-        lng = geocode_result[0]["geometry"]["location"]["lng"]
-        link = f"https://maps.google.com/?q={lat},{lng}"
     except:
         normal_address = ""
+    try:
+        lat = geocode_result[0]["geometry"]["location"]["lat"]
+    except:
         lat = ""
+    try:
+        lng = geocode_result[0]["geometry"]["location"]["lng"]
+    except:
         lng = ""
+    try:
+        link = f"https://maps.google.com/?q={lat},{lng}"
+    except:
         link = ""
     #print(address)
     #print(link)
