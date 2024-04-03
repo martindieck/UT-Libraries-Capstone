@@ -17,7 +17,7 @@ for index, row in tqdm(collection_df.iterrows(), total=len(collection_df)):
     row_dict = {}
     unique_id = row["unique ID"]
     project_name = row["Project name"]
-    #country_code = get_country_code(row["Country"])
+    #country_code = get_country_code(row["Country"])                # Turn on if using GeoApify for more accurate results
     if row["Street address"] == "" and row["City"] == "" and row["State/Province"] == "" and row["Country"] == "":
         latitude = ""
         longitude = ""
