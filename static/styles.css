@@ -2,14 +2,9 @@ body {
     font-family: Arial, sans-serif;
 }
 
-p, h1 {
+p, h1, h3 {
     color: #333;
     text-align: center;
-}
-
-.container {
-    max-width: 600px;
-    margin: 0 auto;
 }
 
 button {
@@ -45,20 +40,6 @@ button {
     background-color: #CC0000;
 }
 
-html, body {
-    height: 100%;
-}
-
-html {
-    display: table;
-    margin: auto;
-}
-
-body {
-    display: table-cell;
-    vertical-align: middle;
-}
-
 textarea {
     width: 40%;
     height: 45px;
@@ -77,4 +58,17 @@ textarea {
 textarea:focus {
     outline: none; 
     border-color: #007bff; 
+}
+
+.iframe-container {
+    display: flex;
+    margin-top: 20px; /* Adjust as needed */
+    justify-content: space-between;
+}
+
+iframe {
+    width: 49vw;
+    height: 500px;
+    border: 0;
+    margin: 0;
 }

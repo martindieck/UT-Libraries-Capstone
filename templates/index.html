@@ -9,8 +9,8 @@
 <body>
     <h1>Verify Coordinates - {{ message }}</h1>
     <p><strong>Project Name:</strong> {{ row.Project }}</p>
-    <p><strong>Generated Address:</strong> {{ row.Address }}</p>
-    <p><strong>Actual Location:</strong> {{ row.City }}, {{ row.State }}, {{ row.County }}, {{ row.Country }}</p>
+    <p><strong>Generated Address:</strong> {{ row.Generated_Address }}</p>
+    <p><strong>Actual Location:</strong>{{ row.Original_Address}} {{ row.City }}, {{ row.State }}, {{ row.County }}, {{ row.Country }}</p>
     <form action="/submit" method="post">
         <input type="hidden" name="row_id" value="{{ row_index }}">
         <textarea name="notes" rows="4" cols="50">{{ row.Notes }}</textarea>
@@ -20,7 +20,17 @@
             <button class="incorrect" type="submit" name="response" value="Incorrect">Incorrect</button>
         </div>
     </form>
-    <iframe width="1000" height="475" style="border:0" loading="lazy" allowfullscreen
-    src="https://www.google.com/maps/embed/v1/search?q={{ row.Latitude }}%2C{{ row.Longitude }}&key={{ api_key }}&zoom=10&region=US"></iframe>
+    <div class="iframe-container">
+        <div>
+            <h3>Relative Location</h3>
+            <iframe loading="lazy" allowfullscreen
+            src="https://www.google.com/maps/embed/v1/search?q={{ row.Relative_Latitude }}%2C{{ row.Relative_Longitude }}&key={{ api_key }}&zoom=10&region=US"></iframe>
+        </div>
+        <div>
+            <h3>Generated Location</h3>
+            <iframe loading="lazy" allowfullscreen
+            src="https://www.google.com/maps/embed/v1/search?q={{ row.Exact_Latitude }}%2C{{ row.Exact_Longitude }}&key={{ api_key }}&zoom=10&region=US"></iframe>
+        </div>
+    </div>
 </body>
 </html>
