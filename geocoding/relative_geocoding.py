@@ -6,7 +6,7 @@ from countrycode import get_country_code
 from google_geocoding import geocode_complete # Change From to use different geocoding modules (ArcGIS, Google Maps, GeoApify)
 from get_collection import get_collection
 
-field_names = ["ID", "City", "State", "County", "Country", "Latitude", "Longitude", "Link"]
+field_names = ["ID", "Lookup", "City", "State", "County", "Country", "Latitude", "Longitude", "Link"]
 geocoded_locations = []
 id = 1
 
@@ -22,6 +22,7 @@ for index, row in tqdm(unique_combinations.iterrows(), total=len(unique_combinat
     state = row["State/Province"]
     county = row["County"]
     country = row["Country"]
+    lookup = city + state + county + country
     if city == "" and state == "" and county == "" and country == "":
         latitude = ""
         longitude = ""
@@ -32,6 +33,7 @@ for index, row in tqdm(unique_combinations.iterrows(), total=len(unique_combinat
         address = ", ".join(address_list)
         normal_address, latitude, longitude, link = geocode_complete(address)
     row_dict["ID"] = unique_id
+    row_dict["Lookup"] = lookup
     row_dict["City"] = city
     row_dict["State"] = state
     row_dict["County"] = county
