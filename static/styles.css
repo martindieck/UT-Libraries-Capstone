@@ -61,9 +61,9 @@ body {
 
 textarea {
     width: 40%;
-    height: 100px;
-    padding: 15px;
-    margin: 15px auto; /* Center the textarea */
+    height: 45px;
+    padding: 10px;
+    margin: 15px auto; 
     display: block;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -75,6 +75,6 @@ textarea {
 }
 
 textarea:focus {
-    outline: none; /* Remove the default focus outline */
-    border-color: #007bff; /* Change border color when focused */
+    outline: none; 
+    border-color: #007bff; 
 }
