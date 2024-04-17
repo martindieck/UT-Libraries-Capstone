@@ -1,19 +1,15 @@
 import pandas as pd
-import numpy as np
 import csv
 from tqdm import tqdm
-from countrycode import get_country_code
 from google_geocoding import geocode_complete # Change From to use different geocoding modules (ArcGIS, Google Maps, GeoApify)
-from get_collection import get_collection
 
-field_names = ["ID", "Lookup", "City", "State", "County", "Country", "Latitude", "Longitude", "Link"]
+field_names = ["ID", "Lookup", "City", "State", "County", "Country", "Latitude", "Longitude", "Flag"]
 geocoded_locations = []
 id = 1
 
 df = pd.read_csv('collections.csv')
 df = df.fillna('')
 unique_combinations = df.groupby(['City', 'State/Province', 'County', 'Country']).size().reset_index().rename(columns={0:'count'}).sort_values(by='count', ascending=False)
-print(unique_combinations)
 
 for index, row in tqdm(unique_combinations.iterrows(), total=len(unique_combinations)):
     row_dict = {}
@@ -26,12 +22,12 @@ for index, row in tqdm(unique_combinations.iterrows(), total=len(unique_combinat
     if city == "" and state == "" and county == "" and country == "":
         latitude = ""
         longitude = ""
-        link = ""
+        flag = 0
     else:
         address_list = [city, county, state, country]
         address = [i for i in address_list if i != ""]
         address = ", ".join(address_list)
-        normal_address, latitude, longitude, link = geocode_complete(address)
+        normal_address, latitude, longitude, flag = geocode_complete(address)
     row_dict["ID"] = unique_id
     row_dict["Lookup"] = lookup
     row_dict["City"] = city
@@ -40,7 +36,7 @@ for index, row in tqdm(unique_combinations.iterrows(), total=len(unique_combinat
     row_dict["Country"] = country
     row_dict["Latitude"] = latitude
     row_dict["Longitude"] = longitude
-    row_dict["Link"] = link
+    row_dict["Flag"] = flag
     geocoded_locations.append(row_dict)
     id += 1
 

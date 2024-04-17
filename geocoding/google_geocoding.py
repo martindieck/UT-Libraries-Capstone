@@ -1,5 +1,6 @@
 import googlemaps
 import configparser
+import json
 
 def geocode_complete(address):
     config = configparser.ConfigParser()
@@ -8,7 +9,9 @@ def geocode_complete(address):
 
     gmaps = googlemaps.Client(key=api_key)
     geocode_result = gmaps.geocode(address)
-    #print(geocode_result)
+
+    # json_str = json.dumps(geocode_result, indent=4)
+    # print(json_str)
 
     try:
         normal_address = geocode_result[0]["formatted_address"]
@@ -23,13 +26,11 @@ def geocode_complete(address):
     except:
         lng = ""
     try:
-        link = f"https://maps.google.com/?q={lat},{lng}"
+        flag = int(geocode_result[0]["partial_match"] == True)
     except:
-        link = ""
-    #print(address)
-    #print(link)
-    return normal_address, lat, lng, link
+        flag = 0
 
-normal_address, lat, lng, link = geocode_complete("Cuauhtemoc")
+    return normal_address, lat, lng, flag
 
-print(link)
+normal_address, lat, lng, flag = geocode_complete("Bastrop, Bastrop, Texas, United States")
+print(flag)
