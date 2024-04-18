@@ -4,6 +4,7 @@ from xml.dom.minidom import parseString
 import xml_c02
 import os
 from datetime import datetime
+from xml_utils import safe_str
 
 
 def create_full_xml_from_row(df):
@@ -30,7 +31,7 @@ def create_full_xml_from_row(df):
     # Process each row in the DataFrame to create c02 elements
     for index, row in df.iterrows():
         print(
-            f"Processing row: {index + 1}, Project ID: {row.get('unique ID', 'N/A')}")
+            f"Processing row: {index + 1}, Project ID: {safe_str(row.get('unique ID', 'N/A'))}")
         c02_element = xml_c02.create_c02(row)
         if c02_element is not None:
             c01.append(c02_element)
@@ -42,6 +43,7 @@ def create_full_xml_from_row(df):
             print("Detected an empty 'unique ID', stopping processing.")
             break
 
+    print('123123123123')
     # Convert the EAD element tree to a string and format it for readability
     xml_str = tostring(ead, 'utf-8')
     pretty_xml_str = parseString(xml_str).toprettyxml(indent="  ")
@@ -71,7 +73,7 @@ def save_xml_to_file(xml_str, folder_path):
 
 
 # Load the spreadsheet
-spreadsheet_path = './converting/AAA-Proj-db-20231222-xlsx (matched_xml_template).xlsx'
+spreadsheet_path = 'converting/source_files/AAA-Fehr and Granger merged 0418.xlsx'
 df = pd.read_excel(spreadsheet_path)
 
 # Generate XML using the create_full_xml_from_row function

@@ -47,9 +47,22 @@
 					<!-- etc, if more collaborators -->
 
 					<controlaccess>
-						<geogname source="fast">[FAST Geographic]</geogname>
-					    <geogname source="local">[Place name]</geogname> <!-- derive from Project name -->
-						<geogname source="local">[Place name]</geogname> <!-- if there is more than one name -->
+						<geogname source="fast">[FAST Geographic]</geogname>
+					  	<geogname source="local">[Place name 1]</geogname> <!-- from Project name -->					
+					  	<geogname source="local">[Place name 2]</geogname> <!-- from Project name -->				
+					  	<geogname source="local">[Place name 3]</geogname> <!-- from Project name -->
+						<!-- etc, if more terms -->					
+					
+						<!-- Convert genreform terms to standard terms -->
+						<!-- Remove duplicates -->
+						<!-- if term is "other (see Notes)" ask AAA team -->
+						<genreform source="aat/gmgpc">[Material types][1]</genreform>
+						<genreform source="aat/gmgpc">[Material types][2]</genreform>
+						<genreform source="aat/gmgpc">[Set types][1]</genreform>
+						<genreform source="aat/gmgpc">[Set types][2]</genreform>
+						<genreform source="aat/gmgpc">[Media][1]</genreform>
+						<genreform source="aat/gmgpc">[Media][2]</genreform>
+						<!-- etc, if more terms -->
 					</controlaccess>					
 					
 					<note><p>City: [City]</p></note>                               
@@ -58,8 +71,11 @@
 					<note><p>Country: [Country]</p></note>
 					
 					<note><p>Street address: [Street address]</p></note>
-					<note><p>Street address (normalized): [Street address normalized]</p></note> <!-- derive from geocoding process -->
-					<note><p>Coordinates (EPSG:4326): [coordinates]</p></note> <!-- derive from geocoding process, in Y,X (Latitude,Longitude) format, using the standard EPSG:4326 coordinate system (used by GPS), eg. 30.4321,-97.1234 -->			
+					<note><p>Street address (normalized): [Street address normalized]</p></note> <!-- from geocoding process -->
+					
+					<note><p>Coordinates (EPSG:4326): [coordinates 1]</p></note> <!-- from geocoding process, in Y,X (Latitude,Longitude) format, using the standard EPSG:4326 coordinate system (used by GPS), eg. 30.4321,-97.1234 -->			
+					<note><p>Coordinates (EPSG:4326): [coordinates 2]</p></note> <!-- add other coordinates as needed, eg. higher-level (city, county, state, etc) coordinates -->			
+					<!-- etc, if more coordinates -->	
 					
 					<note><p>Project Number: [Project number]</p></note>
 					<note><p>Number of items: [Number of items]</p></note>
@@ -84,20 +100,6 @@
 						<container type="box">[AAA box #]</container>
 						<container type="folder">[AAA folder #]</container>						
 						<container type="roll">[AAA roll #]</container>				
-												
-						<!-- FOR DRAWINGS ONLY -->
-						<!-- Split multiple terms into separate records -->
-						<!-- Convert terms to standard terms -->
-						<!-- Remove duplicates -->
-						<!-- if term is "other (see Notes)" ask AAA team -->
-						<controlaccess>
-							<genreform source="aat/gmgpc">[Material types][1]</genreform>
-							<genreform source="aat/gmgpc">[Set types][1]</genreform>
-							<genreform source="aat/gmgpc">[Set types][2]</genreform>
-							<genreform source="aat/gmgpc">[Media][1]</genreform>
-							<genreform source="aat/gmgpc">[Media][2]</genreform>
-							<!-- etc, if more terms -->
-						</controlaccess>
 						
 						<!-- FOR DRAWINGS ONLY -->
 						<note><p>Date on drawings: [Date on drawings]</p></note>
@@ -113,8 +115,7 @@
 						<did>
 							<unittitle>[Material types][2]</unittitle>
 							<unitdate>[Date normalized]</unitdate>						
-						</did>
-					
+						</did>						
 					</c03>
 					
 					<c03 level="file">
@@ -176,7 +177,22 @@
 
 					<controlaccess>
 						<geogname source="fast">Louisiana--Lake Charles</geogname>
-						<geogname source="local">St. Paul’s Evangelical Lutheran Church</geogname>					
+						<geogname source="local">St. Paul’s Evangelical Lutheran Church</geogname>
+
+						<genreform source="aat">architectural drawings (visual works)</genreform>
+						<genreform source="aat">specifications</genreform>
+						
+						<genreform source="aat">structural drawings</genreform>
+						<genreform source="aat">mechanical drawings (building systems drawings)</genreform>
+						<genreform source="aat">interior views</genreform>
+						<genreform source="aat">electrical plans</genreform>
+						<genreform source="aat">presentation drawings (proposals)</genreform>
+						
+						<genreform source="aat">reprographic copies</genreform>
+						<genreform source="aat">mounting board</genreform>
+						<genreform source="aat">tracing paper</genreform>
+						<genreform source="gmgpc">Paper</genreform>
+						<genreform source="aat">tracing cloth</genreform>
 					</controlaccess>
 					
 					<note><p>City: Lake Charles</p></note>                               
@@ -207,26 +223,9 @@
 						<container type="folder">WUK dr.1</container>						
 						<container type="roll">WUKr155.01; WUKr155.02</container>
 						
-						<controlaccess>
-							<genreform source="aat">architectural drawings (visual works)</genreform>
-							<genreform source="aat">specifications</genreform>
-							
-							<genreform source="aat">structural drawings</genreform>
-							<genreform source="aat">mechanical drawings (building systems drawings)</genreform>
-							<genreform source="aat">interior views</genreform>
-							<genreform source="aat">electrical plans</genreform>
-							<genreform source="aat">presentation drawings (proposals)</genreform>
-							
-							<genreform source="aat">reprographic copies</genreform>
-							<genreform source="aat">mounting board</genreform>
-							<genreform source="aat">tracing paper</genreform>
-							<genreform source="gmgpc">Paper</genreform>
-							<genreform source="aat">tracing cloth</genreform>
-						</controlaccess>
-						
 						<note><p>Date on drawings: 1957</p></note>
 						<note><p>Pres. notes: E fasteners/rehouse</p></note>
-						<note><p>Treatment completed E: y</p></note>						
+						<note><p>Treatment completed E: y</p></note>
 					</c03>
 					
 					<c03 level="file">
@@ -249,8 +248,22 @@
 					<origination><persname role="Engineers">J. Eugene Wukasch</persname></origination>
 					
 					<controlaccess>
-					      <geogname source="fast">Texas--Mont Belvieu</geogname>
-					      <geogname source="local">Maranatha Temple Christian Center</geogname>
+					     <geogname source="fast">Texas--Mont Belvieu</geogname>
+					     <geogname source="local">Maranatha Temple Christian Center</geogname>
+					
+						<genreform source="aat">architectural drawings (visual works)</genreform>
+						<genreform source="aat">specifications</genreform>
+						<genreform source="aat">project files</genreform>
+						
+						<genreform source="aat">architectural drawings (visual works)</genreform>
+						<genreform source="aat">structural drawings</genreform>
+						<genreform source="aat">site plans</genreform>
+						<genreform source="aat">presentation drawings (proposals)</genreform>
+						<genreform source="aat">design drawings</genreform>
+						<genreform source="aat">interior views</genreform>
+						
+						<genreform source="gmgpc">Paper</genreform>
+						<genreform source="aat">reprographic copies</genreform>
 					</controlaccess>
 					
 					<note><p>City: Mont Belvieu</p></note>                               
@@ -281,22 +294,6 @@
 						
 						<container type="folder">WUK dr.1</container>						
 						<container type="roll">WUKr156</container>
-						
-						<controlaccess>
-							<genreform source="aat">architectural drawings (visual works)</genreform>
-							<genreform source="aat">specifications</genreform>
-							<genreform source="aat">project files</genreform>
-							
-							<genreform source="aat">architectural drawings (visual works)</genreform>
-							<genreform source="aat">structural drawings</genreform>
-							<genreform source="aat">site plans</genreform>
-							<genreform source="aat">presentation drawings (proposals)</genreform>
-							<genreform source="aat">design drawings</genreform>
-							<genreform source="aat">interior views</genreform>
-							
-							<genreform source="gmgpc">Paper</genreform>
-							<genreform source="aat">reprographic copies</genreform>
-						</controlaccess>
 						
 						<note><p>Date on drawings: 1982-1983</p></note>
 						<note><p>Pres. notes: E fasteners/rehouse</p></note>

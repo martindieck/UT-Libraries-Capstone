@@ -39,23 +39,70 @@ def process_entities(c02, row, entity_type, role='Client'):
 
 
 def add_control_access_and_notes(c02, row):
-    """Adds controlaccess and note elements to the c02 element.
+    """
+    Adds 'controlaccess' and 'note' elements to the 'c02' element based on data from 'row'.
+
+    The 'controlaccess' element is populated with geographic names and attributes sourced from the row.
+    The 'note' elements are populated with various fields such as city, country, and notes.
 
     Parameters:
-    - c02: The parent XML element to which the controlaccess and notes will be added.
-    - row: The data row containing the information.
+    - c02 (Element): The parent XML Element to which the 'controlaccess' and 'note' will be added.
+    - row (dict): A dictionary representing the data row, with expected keys for geographic and note information.
     """
+
     controlaccess = Element('controlaccess')
     c02.append(controlaccess)
 
-    controlaccess_info = [
-        {'text': row.get('FAST Geographic', ''), 'attrib': {'source': 'fast'}},
-        {'text': row.get('Place name', ''), 'attrib': {'source': 'local'}}
+    controlaccess_geogname_info = [
+        {'text': safe_str(row.get('FAST Geographic', '')),
+         'attrib': {'source': 'fast'}},
+        # {'text': row.get('Place name', ''), 'attrib': {'source': 'local'}}
     ]
-    add_elements(controlaccess, 'geogname', controlaccess_info)
 
+    # Extract 'Place name' information with dynamic keys
+    i = 1
+    while True:
+        place_name_key = f'Place name[{i}]'
+        place_name_value = safe_str(row.get(place_name_key))
+        if not place_name_value:
+            break
+        controlaccess_geogname_info.append(
+            {'text': place_name_value, 'attrib': {'source': 'local'}})
+        i += 1
+
+    # Define controlaccess types and extract corresponding values for geoform tag
+    controlaccess_genreform_info = []
+    # Define controlaccess types and extract corresponding values
+    controlaccess_types = [
+        'Material types[standard]', 'Set type', 'Media']
+
+    # Set to track entries for specified controlaccess types to avoid duplicates
+    seen_types = set()
+    for key_base in controlaccess_types:
+        i = 1
+        while True:
+            key = f'{key_base}[{i}]'
+            value = safe_str(row.get(key))
+            if not value:
+                break
+
+            key_src = f'{key_base}_src[{i}]'
+            attr = {'source': safe_str(row.get(key_src))}
+            # attr = {'source': 'aat' if key_base != 'Media' else 'gmgpc'}
+            # Create a unique key based on value and source
+            unique_key = (value, attr['source'])
+            if unique_key not in seen_types:
+                seen_types.add(unique_key)
+                controlaccess_genreform_info.append(
+                    {'text': value, 'attrib': attr})
+            i += 1
+
+    add_elements(controlaccess, 'geogname', controlaccess_geogname_info)
+    add_elements(controlaccess, 'genreform', controlaccess_genreform_info)
+
+    # Define note fields and append note elements to 'c02'
     notes_fields = ['City', 'County', 'State/Province', 'Country', 'Street address',
-                    'Street address normalized', 'Project number', 'Number of items',
+                    'Street address normalized', 'Coordinates', 'Relative_Coordinates', 'Project number', 'Number of items',
                     'Notes', 'Accession #', 'Processor', 'Entry date normalized',
                     'Rev. date normalized', 'unique ID']
     for field in notes_fields:
@@ -78,7 +125,7 @@ def create_c02(row):
     did = Element('did')
     c02.append(did)
     add_elements(did, 'unittitle', [
-        {'text': row.get('Project name', '')}
+        {'text': safe_str(row.get('Project name', ''))}
     ])
     add_elements(did, 'unitdate', [
         {'text': safe_str(

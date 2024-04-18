@@ -59,13 +59,6 @@ def process_drawings_material(c03, row):
     # Add container elements
     add_container_elements(c03, row, container_types)
 
-    controlaccess_types = [
-        'Material types[standard]', 'Set type', 'Media']
-
-    # Controlaccess elements handling
-    add_controlaccess_elements(
-        c03, row, controlaccess_types)
-
     # Adding notes fields specific to 'drawings'
     notes_fields = [
         'Date on drawings', 'Pres. notes:', 'treatment completed A',
@@ -73,33 +66,6 @@ def process_drawings_material(c03, row):
         'treatment completed D', 'treatment completed E'
     ]
     add_notes_fields(c03, row, notes_fields)
-
-
-def add_controlaccess_elements(c03, row, controlaccess_types):
-    """
-    Adds controlaccess elements to the c03 XML element based on specified controlaccess types.
-
-    Parameters:
-    - c03: The c03 XML element being processed.
-    - row: The row data from which to extract information.
-    - controlaccess_types: A list of keys representing different controlaccess types to process.
-    """
-    controlaccess = Element('controlaccess')
-    c03.append(controlaccess)
-
-    for key_base in controlaccess_types:
-        elements_info = []
-        i = 1
-        while True:
-            key = f'{key_base}[{i}]'
-            value = safe_str(row.get(key))
-            if not value:
-                break
-            attr = {'source': 'aat' if key_base != 'Media' else 'gmgpc'}
-            elements_info.append({'text': value, 'attrib': attr})
-            i += 1
-        add_elements(controlaccess, 'genreform',
-                     elements_info, check_empty=True)
 
 
 def add_notes_fields(c03, row, fields):
