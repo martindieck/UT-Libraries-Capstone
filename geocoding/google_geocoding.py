@@ -1,22 +1,29 @@
 import googlemaps
 import configparser
-import json
+import json # Used for debug process
 
 def geocode_complete(address):
+    """Function to geocode a lookup address using the Google Maps API.
+    Input: A lookup address as a string.
+    Returns four values: generated_address, latitude, longitude, flag"""
+
+    # Using configparser to read and process a personalized config.ini file that contains individual API information (See example_config.ini for more information)
     config = configparser.ConfigParser()
     config.read('config.ini')
     api_key = config.get('geocoding', 'GOOGLE_API_KEY')
 
+    #Initializing the Google Maps Client and calling the geocoding function
     gmaps = googlemaps.Client(key=api_key)
     geocode_result = gmaps.geocode(address)
 
-    # json_str = json.dumps(geocode_result, indent=4)
+    # json_str = json.dumps(geocode_result, indent=4)           # Uncomment to analyze detailed JSON results from API for debugging process
     # print(json_str)
 
+    # Try and Except blocks to obtain the specified results from the final JSON output
     try:
-        normal_address = geocode_result[0]["formatted_address"]
+        generated_address = geocode_result[0]["formatted_address"]
     except:
-        normal_address = ""
+        generated_address = ""
     try:
         lat = geocode_result[0]["geometry"]["location"]["lat"]
     except:
@@ -28,9 +35,6 @@ def geocode_complete(address):
     try:
         flag = int(geocode_result[0]["partial_match"] == True)
     except:
-        flag = 0
+        flag = 1
 
-    return normal_address, lat, lng, flag
-
-# normal_address, lat, lng, flag = geocode_complete("Bastrop, Bastrop, Texas, United States")
-# print(flag)
+    return generated_address, lat, lng, flag
