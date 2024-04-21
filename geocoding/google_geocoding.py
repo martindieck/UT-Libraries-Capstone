@@ -32,5 +32,5 @@ def geocode_complete(address):
 
     return normal_address, lat, lng, flag
 
-normal_address, lat, lng, flag = geocode_complete("Bastrop, Bastrop, Texas, United States")
-print(flag)
+# normal_address, lat, lng, flag = geocode_complete("Bastrop, Bastrop, Texas, United States")
+# print(flag)

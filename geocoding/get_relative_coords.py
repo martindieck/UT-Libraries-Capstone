@@ -7,9 +7,9 @@ def get_relative_coords(lookup_value, csv_file):
     if len(result) == 0:
         return None  # If lookup_value not found, return None
     
-    # Extract Latitude, Longitude, and Link columns
+    # Extract Latitude, Longitude, and Flag columns
     latitude = result.iloc[0]['Latitude']
     longitude = result.iloc[0]['Longitude']
-    link = result.iloc[0]['Link']
+    flag = result.iloc[0]['Flag']
 
-    return latitude, longitude, link
+    return latitude, longitude, flag
