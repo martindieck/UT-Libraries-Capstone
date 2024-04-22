@@ -22,14 +22,14 @@
     </form>
     <div class="iframe-container">
         <div>
-            <h3>Relative Location (Abstract)</h3>
+            <h3 class="flagged-{{ row.Relative_Flag}}">Relative Location (Abstract)</h3>
             <iframe loading="lazy" allowfullscreen
-            src="https://www.google.com/maps/embed/v1/search?q={{ row.Relative_Latitude }}%2C{{ row.Relative_Longitude }}&key={{ api_key }}&zoom=10&region=US"></iframe>
+            src="https://www.google.com/maps/embed/v1/search?q={{ row.Relative_Latitude }}%2C{{ row.Relative_Longitude }}&key={{ api_key }}&zoom=10"></iframe>
         </div>
         <div>
-            <h3>Google Maps Guess</h3>
+            <h3 class="flagged-{{ row.Exact_Flag}}">Google Maps Guess</h3>
             <iframe loading="lazy" allowfullscreen
-            src="https://www.google.com/maps/embed/v1/search?q={{ row.Exact_Latitude }}%2C{{ row.Exact_Longitude }}&key={{ api_key }}&zoom=10&region=US"></iframe>
+            src="https://www.google.com/maps/embed/v1/search?q={{ row.Exact_Latitude }}%2C{{ row.Exact_Longitude }}&key={{ api_key }}&zoom=10"></iframe>
         </div>
     </div>
 </body>

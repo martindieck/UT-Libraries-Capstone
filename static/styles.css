@@ -72,3 +72,11 @@ iframe {
     border: 0;
     margin: 0;
 }
+
+.flagged-1 {
+    color: red;
+}
+
+.flagged-0 {
+    color: green;
+}
