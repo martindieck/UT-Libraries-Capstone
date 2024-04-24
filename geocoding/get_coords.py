@@ -10,7 +10,7 @@ from get_relative_coords import get_relative_coords # Script to obtain the relat
 collection_code = "AA" # Input desired collection code to perform geocoding
 
 field_names = [     # Field names for the final csv
-    "ID",
+    "unique ID",
     "Project",
     "Original_Address",
     "City",
@@ -66,7 +66,7 @@ for index, row in tqdm(collection_df.iterrows(), total=len(collection_df)):     
         generated_address, exact_latitude, exact_longitude, exact_flag = geocode_complete(address) # Obtain address, latitude, longitude and flag from geocoding process
 
     #Setting Final CSV Fields
-    row_dict["ID"] = unique_id
+    row_dict["unique ID"] = unique_id
     row_dict["Project"] = project_name
     row_dict["Original_Address"] = original_address
     row_dict["City"] = city
