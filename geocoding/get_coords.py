@@ -29,7 +29,7 @@ field_names = [     # Field names for the final csv
 
 geocoded_collection = [] # Empty list to store intermediate values for csv generation
 
-def main(filename, output_location, api_key):
+def main(filename, output_location, api_key, relative_locations_directory):
     collection_df = pd.read_csv(filename)
     collection_df = collection_df.fillna('') # Fill N/A values with empty strings to avoid errors
 
@@ -49,7 +49,7 @@ def main(filename, output_location, api_key):
 
         # Obtaining Relative Geocode Values from previously generated csv
         try:
-            relative_latitude, relative_longitude, relative_flag = get_relative_coords(lookup_value, "relative_locations.csv")
+            relative_latitude, relative_longitude, relative_flag = get_relative_coords(lookup_value, relative_locations_directory)
         except:
             relative_latitude, relative_longitude, relative_flag = "", "", 1 # If no values are found, fill the coordinates with empty strings and flag the row
 
@@ -92,11 +92,12 @@ def main(filename, output_location, api_key):
     print(f"Data saved to {output_location}")
 
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
-        print("Usage: python get_coords.py <input_csv_path> <output_csv_path> <api_key>")
+    if len(sys.argv) != 5:
+        print("Usage: python get_coords.py <input_csv_path> <output_csv_path> <api_key> <relative_locations_directory>")
         sys.exit(1)
     
     input_csv_path = sys.argv[1]
     output_csv_path = sys.argv[2]
     api_key = sys.argv[3]
-    main(input_csv_path, output_csv_path, api_key)
+    relative_locations_directory = sys.argv[4]
+    main(input_csv_path, output_csv_path, api_key, relative_locations_directory)
