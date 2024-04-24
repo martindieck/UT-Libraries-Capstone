@@ -83,10 +83,19 @@ for i in range(max_collaborators):
     data[f'Collaborators[{i+1}]_flag'] = data['Structured Collaborators'].apply(
         lambda x: x[i]['Flag'] if i < len(x) else None)
 
-# Remove the now unnecessary 'Structured Collaborators' column
-data = data.drop(columns=['Structured Collaborators'])
+# Selecting only specified columns
+output_columns = ['unique ID', 'Collaborators:']
+for i in range(max_collaborators):
+    output_columns.extend([
+        f'Collaborators[{i+1}][Name]',
+        f'Collaborators[{i+1}][Type]',
+        f'Collaborators[{i+1}][Role]',
+        f'Collaborators[{i+1}]_flag'
+    ])
 
-# Save the transformed data to a new Excel file
-data.to_csv(output_filename, index=False)
+final_output = data[output_columns]
+
+# Save the transformed data to a new CSV file
+final_output.to_csv(output_filename, index=False)
 
 print(f"Data has been processed and saved to '{output_filename}'.")
