@@ -2,15 +2,16 @@ import googlemaps
 import configparser
 import json # Used for debug process
 
-def geocode_complete(address):
+def geocode_complete(address, api_key_external):
     """Function to geocode a lookup address using the Google Maps API.
     Input: A lookup address as a string.
     Returns four values: generated_address, latitude, longitude, flag"""
 
     # Using configparser to read and process a personalized config.ini file that contains individual API information (See example_config.ini for more information)
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    api_key = config.get('geocoding', 'GOOGLE_API_KEY')
+    # config = configparser.ConfigParser()
+    # config.read('config.ini')
+    # api_key = config.get('geocoding', 'GOOGLE_API_KEY')
+    api_key = api_key_external
 
     #Initializing the Google Maps Client and calling the geocoding function
     gmaps = googlemaps.Client(key=api_key)

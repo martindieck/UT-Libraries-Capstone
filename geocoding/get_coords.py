@@ -1,3 +1,4 @@
+import sys
 import pandas as pd
 import numpy as np
 import csv
@@ -28,7 +29,7 @@ field_names = [     # Field names for the final csv
 
 geocoded_collection = [] # Empty list to store intermediate values for csv generation
 
-def get_coords(filename, output_location):
+def main(filename, output_location, api_key):
     collection_df = pd.read_csv(filename)
     collection_df = collection_df.fillna('') # Fill N/A values with empty strings to avoid errors
 
@@ -62,7 +63,7 @@ def get_coords(filename, output_location):
             address_list = [project_name, original_address, city, county, state, country] # Create a lookup value using all relevant fields
             address = [i for i in address_list if i != ""]
             address = ", ".join(address_list)
-            generated_address, exact_latitude, exact_longitude, exact_flag = geocode_complete(address) # Obtain address, latitude, longitude and flag from geocoding process
+            generated_address, exact_latitude, exact_longitude, exact_flag = geocode_complete(address, api_key) # Obtain address, latitude, longitude and flag from geocoding process
 
         #Setting Final CSV Fields
         row_dict["unique ID"] = unique_id
@@ -89,3 +90,13 @@ def get_coords(filename, output_location):
         writer.writeheader()
         writer.writerows(geocoded_collection)
     print(f"Data saved to {output_location}")
+
+if __name__ == '__main__':
+    if len(sys.argv) != 4:
+        print("Usage: python get_coords.py <input_csv_path> <output_csv_path> <api_key>")
+        sys.exit(1)
+    
+    input_csv_path = sys.argv[1]
+    output_csv_path = sys.argv[2]
+    api_key = sys.argv[3]
+    main(input_csv_path, output_csv_path, api_key)
