@@ -200,7 +200,7 @@ def update_dataframe_from_llm(df, index, entry, processed_data, all_corp_rules, 
 
 def process_json(output_json):
     try:
-        print(output_json)
+        # print(output_json)
         data = json.loads(output_json)
         entity_dict = {}
         for idx, (name, entity_type) in enumerate(data.items(), start=1):
@@ -301,9 +301,6 @@ def main():
                 json_output = get_llm_output(curr_entry, llm_instruction, client)
                 processed_data = process_json(json_output)
                 update_dataframe_from_llm(df, index, curr_entry, processed_data, all_corp_rules, persons_name_flags)
-
-                if api_counter == 100:
-                    break
             
     print("LLM API called" , api_counter , "times.")
 
