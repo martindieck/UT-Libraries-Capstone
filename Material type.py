@@ -1,7 +1,19 @@
 import pandas as pd
 import numpy as np
+import sys
 
-df = pd.read_csv("/Users/sirikuppili/Desktop/capstone/AAA_Proj_db_20231222_Material type.csv")
+if len(sys.argv) != 3:
+    print("Usage: python script.py <input_csv> <output_csv>")
+    print("Number of arguments:", len(sys.argv))
+    print("Argument List:", str(sys.argv))
+    sys.exit(1)
+
+# Input and output file paths
+input_csv = sys.argv[1]
+output_csv = sys.argv[2]
+map_path = '/Users/sirikuppili/Desktop/capstone/Mapped_genre□form.xlsx'
+
+df = pd.read_csv(input_csv)
 
 
 separators = '|'.join([' on ', ',', '/', '\n','and'])
@@ -57,4 +69,4 @@ for col,flag in zip(new_cols, new_flag_cols):
                 df_test.at[index, flag] = '1'
 
 # Output the DataFrame with the new 'flagged' column
-df_test.to_csv('AAA_Proj_db_20231222_outputMaterial_type.csv', index=False)
+df_test.to_csv(output_csv)
