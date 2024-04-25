@@ -8,17 +8,6 @@ from tqdm import tqdm
 from openai import OpenAI
 from dotenv import load_dotenv
 
-# Load the environment variables from .env file
-load_dotenv()
-
-# Access the GPT API key
-api_key = os.getenv('GPT_API_KEY')
-if api_key:
-    print("Successfully received API Key")
-else:
-    print("API Key not found. Please check your .env file.")
-
-client = OpenAI(api_key=api_key)
 
 llm_instruction = "You have 2 tasks: identify and format. Below are the instructions for both.\n\nIdentify and Reformat Instructions:\nFind the entities in the entry and reformat them. If it is a person, format their name as [title] [first name or initial] [middle name or initial] [last name]. There will sometimes be multiple people but only one given name like Dang, William (Mr. and Mrs.). If this is the case, create multiple entities for each title: Mr. William Dang, and Mrs. William Dang.\nEsq. is a person's title\nGive me the JSON Object that stores each entity and its type. The types you can use are person and corporate.\n\nFor example:\nUrshel, Mr. and Mrs. C. F. would be {\"Mr. C. F. Urshel\": \"person\", \"Mrs. C. F. Urshel\": \"person\"}\nBexar County would be {\"Bexar County\": \"corporate\"}\n"
 
@@ -144,7 +133,7 @@ def check_single_word(entry, debug = False):
         return True
     return False
 
-def get_llm_output(input_text, instruction, debug = False):
+def get_llm_output(input_text, instruction, client, debug = False, ):
     if input_text in llm_cache:
         if debug:
             print("Using cached data: " + input_text)
@@ -225,13 +214,16 @@ def main():
 
     """Get input data"""
     # Check if the correct number of arguments are passed
-    if len(sys.argv) != 3:
-        print("Usage: python Client.py <input xlsx> <output csv>")
+    if len(sys.argv) != 4:
+        print("Usage: python Client.py <input xlsx> <output csv> <API key>")
         sys.exit(1)
 
     # Input and output file paths
     input_file = sys.argv[1]
     output_file = sys.argv[2]
+    api_key = sys.argv[3]
+    client = OpenAI(api_key=api_key)
+
 
     # Read the Excel file
     try:
@@ -306,7 +298,7 @@ def main():
             else:
                 api_counter += 1
 
-                json_output = get_llm_output(curr_entry, llm_instruction)
+                json_output = get_llm_output(curr_entry, llm_instruction, client)
                 processed_data = process_json(json_output)
                 update_dataframe_from_llm(df, index, curr_entry, processed_data, all_corp_rules, persons_name_flags)
 
