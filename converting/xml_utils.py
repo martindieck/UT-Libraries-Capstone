@@ -4,8 +4,8 @@ from xml.etree.ElementTree import SubElement
 
 
 def safe_str(val) -> str:
-    """Convert non-string and NaN values to a string."""
-    if pd.isna(val):
+    """Convert non-string, NaN values, and space-only strings to an empty string."""
+    if pd.isna(val) or (isinstance(val, str) and val.strip() == ''):
         return ''
     return str(val)
 
