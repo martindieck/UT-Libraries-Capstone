@@ -43,7 +43,6 @@ def create_full_xml_from_row(df):
             print("Detected an empty 'unique ID', stopping processing.")
             break
 
-    print('123123123123')
     # Convert the EAD element tree to a string and format it for readability
     xml_str = tostring(ead, 'utf-8')
     pretty_xml_str = parseString(xml_str).toprettyxml(indent="  ")
