@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
 import sys
+import openpyxl
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 4:
     print("Usage: python script.py <input_csv> <output_csv>")
     print("Number of arguments:", len(sys.argv))
     print("Argument List:", str(sys.argv))
@@ -10,8 +11,9 @@ if len(sys.argv) != 3:
 
 # Input and output file paths
 input_csv = sys.argv[1]
-output_csv = sys.argv[2]
-map_path = '/Users/sirikuppili/Desktop/capstone/Mapped_genre□form.xlsx'
+map_path = sys.argv[2]
+output_csv = sys.argv[3]
+
 
 df = pd.read_csv(input_csv)
 
@@ -43,8 +45,8 @@ df_test = pd.concat([df,df_split,df_stand,df_src], axis=1)
 print(new_cols)
 print(new_src_cols)
 
-map_path = '/Users/sirikuppili/Desktop/capstone/Mapped_genre□form.xlsx'
-sheet_name = 'Material type-ProjectDB'
+#map_path = '/Users/sirikuppili/Desktop/capstone/Mapped_genre□form.xlsx'
+sheet_name = 'Materialtype_new'
 
 df_map2 = pd.read_excel(map_path, sheet_name=sheet_name)
 

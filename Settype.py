@@ -3,7 +3,7 @@ import numpy as np
 
 import sys
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 4:
     print("Usage: python script.py <input_csv> <output_csv>")
     print("Number of arguments:", len(sys.argv))
     print("Argument List:", str(sys.argv))
@@ -11,8 +11,8 @@ if len(sys.argv) != 3:
 
 # Input and output file paths
 input_csv = sys.argv[1]
-output_csv = sys.argv[2]
-map_path = '/Users/sirikuppili/Desktop/capstone/Mapped_genre□form.xlsx'
+map_path = sys.argv[2]
+output_csv = sys.argv[3]
 
 separators_set = '|'.join([' on', ',', '/', '\n',':','&',' and'])
 #print(separators_set)
@@ -20,14 +20,14 @@ separators_set = '|'.join([' on', ',', '/', '\n',':','&',' and'])
 df = pd.read_csv(input_csv)
 # Split the 'Media' column based on the separators
 df_split = df['Set type'].str.split(separators_set, expand=True)
-if df_split[17].isna().all():
-    print("All values in column 17 are NaN")
-else:
-    # Display non-NaN values in column 17
-    non_nan_values = df_split.loc[~df_split[17].isna(), 17]
-    print("Non-NaN values in column 17:")
-    print(non_nan_values)
-# Determine the maximum number of columns needed
+# if df_split[17].isna().all():
+#     print("All values in column 17 are NaN")
+# else:
+#     # Display non-NaN values in column 17
+#     non_nan_values = df_split.loc[~df_split[17].isna(), 17]
+#     print("Non-NaN values in column 17:")
+#     print(non_nan_values)
+# # Determine the maximum number of columns needed
 max_cols = df_split.shape[1]
 
 # Create new column names based on the maximum number of columns
@@ -47,7 +47,7 @@ df_test = pd.concat([df,df_split, df_src], axis=1)
 print(new_cols)
 print(new_src_cols)
 
-sheet_name = 'Sheet1'
+sheet_name = 'Settype'
 #map_path = '/Users/sirikuppili/Desktop/capstone/Mapped_genre□form.xlsx'
 df_map2 = pd.read_excel(map_path, sheet_name=sheet_name)
 

@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import sys
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 4:
     print("Usage: python script.py <input_csv> <output_csv>")
     print("Number of arguments:", len(sys.argv))
     print("Argument List:", str(sys.argv))
@@ -10,8 +10,8 @@ if len(sys.argv) != 3:
 
 # Input and output file paths
 input_csv = sys.argv[1]
-output_csv = sys.argv[2]
-map_path = '/Users/sirikuppili/Desktop/capstone/Mapped_genre□form.xlsx'
+map_path = sys.argv[2]
+output_csv = sys.argv[3]
 
 #df.to_csv('AAA_Proj_db_20231222_outputmedia.csv', index=False)
 df = pd.read_csv(input_csv)
