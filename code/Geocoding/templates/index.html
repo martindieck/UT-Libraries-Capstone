@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Coordinates</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Verify Coordinates - {{ message }}</h1>
+    <p><strong>Project Name:</strong> {{ row.Project }}</p>
+    <p><strong>Generated Address:</strong> {{ row.Generated_Address }}</p>
+    <p><strong>Original Address:</strong>{{ row.Original_Address}} {{ row.City }}, {{ row.State }}, {{ row.County }}, {{ row.Country }}</p>
+    <form action="/submit" method="post">
+        <input type="hidden" name="row_id" value="{{ row_index }}">
+        <textarea name="notes" rows="4" cols="50">{{ row.Notes }}</textarea>
+        <div class="button-container">
+            <button class="correct" type="submit" name="response" value="Correct">Correct</button>
+            <button class="unsure" type="submit" name="response" value="Unsure">Unsure</button>
+            <button class="incorrect" type="submit" name="response" value="Incorrect">Incorrect</button>
+        </div>
+    </form>
+    <div class="iframe-container">
+        <div>
+            <h3>Relative Location (Abstract)</h3>
+            <iframe loading="lazy" allowfullscreen
+            src="https://www.google.com/maps/embed/v1/search?q={{ row.Relative_Latitude }}%2C{{ row.Relative_Longitude }}&key={{ api_key }}&zoom=10&region=US"></iframe>
+        </div>
+        <div>
+            <h3>Google Maps Guess</h3>
+            <iframe loading="lazy" allowfullscreen
+            src="https://www.google.com/maps/embed/v1/search?q={{ row.Exact_Latitude }}%2C{{ row.Exact_Longitude }}&key={{ api_key }}&zoom=10&region=US"></iframe>
+        </div>
+    </div>
+</body>
+</html>

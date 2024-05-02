@@ -1,0 +1,12 @@
+Entry_date\Entry_date.py,Entry_date.csv
+Rev_date\Rev_date.py,Rev_date.csv
+Primary_archtfirm\Primary_Architecture.py,Primary_Architecture.csv
+Collaborators\Collaborators.py,Collaborators.csv
+Client\Client.py,Client.csv
+Geocoding\geocoding\get_coords.py,Coords.csv
+Material_Media_Set\Materialtype.py,Material_type.csv
+Material_Media_Set\Media.py,Media.csv
+Material_Media_Set\Settype.py,Set_type.csv
+Project_name\Project_name.py,Project_name.csv
+
+

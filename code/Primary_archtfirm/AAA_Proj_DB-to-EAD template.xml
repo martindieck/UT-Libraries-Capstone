@@ -1,0 +1,322 @@
+
+<!-- OVERALL NOTES -->
+<!-- Remove tags if values are empty -->
+<!-- Create separate XML files for each Collection -->
+<!-- Bracketed values, eg. [Primary archt/firm], refer to Project DB fields -->
+
+<ead>
+	<archdesc level="collection" type="inventory">
+		<dsc>
+			<c01 level="series">
+				<did>
+					<unittitle>Projects</unittitle>
+				</did>	
+				
+				<!-- create new c02 Project level groups for each Project DB record in a collection -->
+				<c02 level="otherlevel" otherlevel="Project">				
+					<did>
+						<unittitle>[Project name]</unittitle>
+						<unitdate>[Date normalized]</unitdate>						
+					</did>
+					
+					<!-- specify role if known, otherwise use "Contributor" -->
+					<origination><persname role="[Primary archt/firm][1][Role]">[Primary archt/firm][1]</persname></origination> <!--if a person-->
+					<!-- or -->
+					<origination><corpname role="[Primary archt/firm][1][Role]">[Primary archt/firm][1]</corpname></origination> <!--if a company-->
+					
+					<origination><persname role="[Primary archt/firm][2][Role]">[Primary archt/firm][2]</persname></origination> <!--if a person-->
+					<!-- or -->
+					<origination><corpname role="[Primary archt/firm][2][Role]">[Primary archt/firm][2]</corpname></origination> <!--if a company-->
+					
+					<!-- etc, if more architects -->
+					
+					<origination><persname role="Client">[Client]</persname></origination> <!--if a person-->
+					<!-- or -->
+					<origination><corpname role="Client">[Client]</corpname></origination> <!--if a company-->
+						
+					<!-- specify role if known, otherwise use "Contributor" -->
+					<!-- Split multiple people/companies into separate records -->
+					<origination><persname role="[Collaborators][1][Role]">[Collaborators][1][Name]</persname></origination> <!--if a person-->
+					<!-- or -->
+					<origination><corpname role="[Collaborators][1][Role]">[Collaborators][1][Name]</corpname></origination> <!--if a company-->
+					
+					<origination><persname role="[Collaborators][2][Role]">[Collaborators][2][Name]</persname></origination> <!--if a person-->
+					<!-- or -->
+					<origination><corpname role="[Collaborators][2][Role]">[Collaborators][2][Name]</corpname></origination> <!--if a company-->
+					
+					<!-- etc, if more collaborators -->
+
+					<controlaccess>
+						<geogname source="fast">[FAST Geographic]</geogname>
+					     <geogname source="local">[Place name]</geogname> <!-- derive from Project name -->
+					</controlaccess>					
+					
+					<note><p>City: [City]</p></note>                               
+					<note><p>County: [County]</p></note>                                
+					<note><p>State/Province: [State/Province]</p></note>                               
+					<note><p>Country: [Country]</p></note>
+					
+					<note><p>Street address: [Street address]</p></note>
+					<note><p>Street address (normalized): [Street address normalized]</p></note> <!-- derive from geocoding process -->
+					<note><p>Coordinates (EPSG:4326): [coordinates]</p></note> <!-- derive from geocoding process, in Y,X (Latitude,Longitude) format, using the standard EPSG:4326 coordinate system (used by GPS), eg. 30.4321,-97.1234 -->			
+					
+					<note><p>Project Number: [Project number]</p></note>
+					<note><p>Number of items: [Number of items]</p></note>
+					
+					<note><p>Contributor notes: [Contributor notes]</p></note>
+					<note><p>Notes: [Notes]</p></note>
+					<note><p>Accession #: [Accession #]</p></note>
+					<note><p>Processing completion date: [Processing completion date]</p></note>
+					<note><p>Processor: [Processor]</p></note>
+					<note><p>Entry date: [Entry date]</p></note> <!-- remove time, only keep date, convert to YYYY-MM-DD -->
+					<note><p>Rev. date: [Rev. date]</p></note> <!-- remove time, only keep date, convert to YYYY-MM-DD -->
+					<note><p>AAA Projects Database Unique ID: [unique ID]</p></note>
+					
+					<!-- Add c03 records for each [Material types], ignore "undetermined", blanks are "drawings" -->
+					<c03 level="file">
+						<did>
+							<unittitle>[Material types][1]</unittitle> <!-- Use original term -->
+							<unitdate>[Date normalized]</unitdate>						
+						</did>
+						
+						<!-- FOR DRAWINGS ONLY -->						
+						<container type="box">[AAA box #]</container>
+						<container type="folder">[AAA folder #]</container>						
+						<container type="roll">[AAA roll #]</container>				
+												
+						<!-- FOR DRAWINGS ONLY -->
+						<!-- Split multiple terms into separate records -->
+						<!-- Convert terms to standard terms -->
+						<!-- Remove duplicates -->
+						<!-- if term is "other (see Notes)" ask AAA team -->
+						<controlaccess>
+							<genreform source="aat/gmgpc">[Material types][1]</genreform>
+							<genreform source="aat/gmgpc">[Material types][2]</genreform>
+							<genreform source="aat/gmgpc">[Set types][1]</genreform>
+							<genreform source="aat/gmgpc">[Set types][2]</genreform>
+							<genreform source="aat/gmgpc">[Media][1]</genreform>
+							<genreform source="aat/gmgpc">[Media][2]</genreform>
+							<!-- etc, if more terms -->
+						</controlaccess>
+						
+						<!-- FOR DRAWINGS ONLY -->
+						<note><p>Date on drawings: [Date on drawings]</p></note>
+						<note><p>Pres. notes: [Pres. notes]</p></note>
+						<note><p>Treatment completed A: [treatment completed A]</p></note>
+						<note><p>Treatment completed B: [treatment completed B]</p></note>
+						<note><p>Treatment completed C: [treatment completed C]</p></note>
+						<note><p>Treatment completed D: [treatment completed D]</p></note>
+						<note><p>Treatment completed E: [treatment completed E]</p></note>						
+					</c03>
+					
+					<c03 level="file">
+						<did>
+							<unittitle>[Material types][2]</unittitle>
+							<unitdate>[Date normalized]</unitdate>						
+						</did>						
+					</c03>
+					
+					<c03 level="file">
+						<did>
+							<unittitle>[Material types][3]</unittitle>
+							<unitdate>[Date normalized]</unitdate>						
+						</did>						
+					</c03>
+					
+					<!-- etc, if more material types -->	
+					
+				</c02>
+
+				<!-- create new c02 Project level groups for each Project DB record in a Collection -->
+				<c02 level="otherlevel" otherlevel="Project">
+					<!-- project level data -->
+					<c03 level="file">
+						<!-- file level data -->
+					</c03>
+				</c02>
+
+				<!-- create new c02 Project level groups for each Project DB record in a Collection -->
+				<c02 level="otherlevel" otherlevel="Project">
+					<!-- project level data -->
+					<c03 level="file">
+						<!-- file level data -->
+					</c03>
+				</c02>
+
+				<!-- etc, if more projects -->
+				
+			</c01>
+		</dsc>
+	</archdesc>
+</ead>
+
+
+<!-- EXAMPLE using 2 projects in the WUK collection -->
+
+<ead>
+	<archdesc level="collection" type="inventory">
+		<dsc>
+			<c01 level="series">
+				<did>
+					<unittitle>Projects</unittitle>
+				</did>
+				
+				<!-- First example project -->
+				<c02 level="otherlevel" otherlevel="Project">				
+					<did>
+						<unittitle>St. Paul’s Evangelical Lutheran Church. First unit.</unittitle>
+						<unitdate>1957</unitdate>						
+					</did>
+					
+					<origination><persname role="contributor">J. Eugene Wukasch</persname></origination>
+					<origination><persname role="associate architect">Robert L. Miller</persname></origination>
+					<origination><corpname role="client">St. Paul’s Evangelical Lutheran Church</corpname></origination>
+					<origination><persname role="engineer">J. Eugene Wukasch</persname></origination>	
+
+					<controlaccess>
+						<geogname source="fast">Louisiana--Lake Charles</geogname>
+						<geogname source="local">St. Paul’s Evangelical Lutheran Church</geogname>
+					</controlaccess>
+					
+					<note><p>City: Lake Charles</p></note>                               
+					<note><p>County: Calcasieu </p></note>                                
+					<note><p>State/Province: Louisiana</p></note>                               
+					<note><p>Country: United States</p></note>
+					
+					<note><p>Street address: Brien Lake Road</p></note>	
+					<note><p>Street address (normalized): 1620 E Prien Lake Rd, Lake Charles, LA 70601</p></note>				
+					<note><p>Coordinates (EPSG:4326): 30.197629661598036,-93.19714747795992</p></note>
+						
+					<note><p>Project Number: 5701</p></note>
+					<note><p>Number of items: 75</p></note>				
+					
+					<note><p>Notes: Presentation drawing on board (1 item)</p></note>
+					<note><p>Accession #: 2001008</p></note>
+					<note><p>Processor: BHN; kap</p></note>
+					<note><p>Entry date: Fri Mar 14 2003</p></note>
+					<note><p>Rev. date: Fri Oct 21 2011</p></note>	
+					<note><p>AAA Projects Database Unique ID: 6646</p></note>
+					
+					<c03 level="file">
+						<did>
+							<unittitle>Drawings</unittitle>
+							<unitdate>1957</unitdate>						
+						</did>
+						
+						<container type="folder">WUK dr.1</container>						
+						<container type="roll">WUKr155.01; WUKr155.02</container>
+						
+						<controlaccess>
+							<genreform source="aat">architectural drawings (visual works)</genreform>
+							<genreform source="aat">specifications</genreform>
+							
+							<genreform source="aat">structural drawings</genreform>
+							<genreform source="aat">mechanical drawings (building systems drawings)</genreform>
+							<genreform source="aat">interior views</genreform>
+							<genreform source="aat">electrical plans</genreform>
+							<genreform source="aat">presentation drawings (proposals)</genreform>
+							
+							<genreform source="aat">reprographic copies</genreform>
+							<genreform source="aat">mounting board</genreform>
+							<genreform source="aat">tracing paper</genreform>
+							<genreform source="gmgpc">Paper</genreform>
+							<genreform source="aat">tracing cloth</genreform>
+						</controlaccess>
+						
+						<note><p>Date on drawings: 1957</p></note>
+						<note><p>Pres. notes: E fasteners/rehouse</p></note>
+						<note><p>Treatment completed E: y</p></note>						
+					</c03>
+					
+					<c03 level="file">
+						<did>
+							<unittitle>Specifications</unittitle>
+							<unitdate>1957</unitdate>						
+						</did>						
+					</c03>
+				</c02>
+				
+				<!-- Second example project -->
+				<c02 level="otherlevel" otherlevel="Project">				
+					<did>
+						<unittitle>Maranatha Temple Christian Center</unittitle>
+						<unitdate>1982-1983</unitdate>						
+					</did>
+					
+					<origination><persname role="Contributor">J. Eugene Wukasch</persname></origination>
+					<origination><corpname role="Client">Maranatha Temple Christian Center</corpname></origination>
+					<origination><persname role="Engineers">J. Eugene Wukasch</persname></origination>
+					
+					<controlaccess>
+					      <geogname source="fast">Texas--Mont Belvieu</geogname>
+					      <geogname source="local">Maranatha Temple Christian Center</geogname>
+					</controlaccess>
+					
+					<note><p>City: Mont Belvieu</p></note>                               
+					<note><p>County: Chambers </p></note>                                
+					<note><p>State/Province: Texas</p></note>                               
+					<note><p>Country: United States</p></note>
+					
+					<note><p>Street address: Highway 146 off Interstate 10</p></note>
+					<note><p>Street address (normalized): 12319 N Hwy 146, Mont Belvieu, TX 77535</p></note>                           
+					<note><p>Coordinates (EPSG:4326): 29.8630395,-94.8949790 </p></note>
+					
+					<note><p>Project Number: 8125</p></note>
+					<note><p>Number of items: 44</p></note>	
+					<note><p>Street address: Highway 146 off Interstate 10</p></note>						
+					
+					<note><p>Notes: Mounted presentation drawings on board (2 items, interior and exterior)</p></note>
+					<note><p>Accession #: 2001008</p></note>
+					<note><p>Processor: BHN; djc</p></note>
+					<note><p>Entry date: 2003-03-14 </p></note>
+					<note><p>Rev. date: 2011-01-24 </p></note>	
+					<note><p>AAA Projects Database Unique ID: 6647</p></note>
+					
+					<c03 level="file">
+						<did>
+							<unittitle>Drawings</unittitle>
+							<unitdate>1982-1983</unitdate>						
+						</did>
+						
+						<container type="folder">WUK dr.1</container>						
+						<container type="roll">WUKr156</container>
+						
+						<controlaccess>
+							<genreform source="aat">architectural drawings (visual works)</genreform>
+							<genreform source="aat">specifications</genreform>
+							<genreform source="aat">project files</genreform>
+							
+							<genreform source="aat">architectural drawings (visual works)</genreform>
+							<genreform source="aat">structural drawings</genreform>
+							<genreform source="aat">site plans</genreform>
+							<genreform source="aat">presentation drawings (proposals)</genreform>
+							<genreform source="aat">design drawings</genreform>
+							<genreform source="aat">interior views</genreform>
+							
+							<genreform source="gmgpc">Paper</genreform>
+							<genreform source="aat">reprographic copies</genreform>
+						</controlaccess>
+						
+						<note><p>Date on drawings: 1982-1983</p></note>
+						<note><p>Pres. notes: E fasteners/rehouse</p></note>
+						<note><p>Treatment completed E: y</p></note>						
+					</c03>
+					
+					<c03 level="file">
+						<did>
+							<unittitle>Specifications</unittitle>
+							<unitdate>1982-1983</unitdate>						
+						</did>						
+					</c03>
+					
+					<c03 level="file">
+						<did>
+							<unittitle>Job files</unittitle>
+							<unitdate>1982-1983</unitdate>
+						</did>						
+					</c03>
+				</c02>				
+			</c01>
+		</dsc>
+	</archdesc>
+</ead>
