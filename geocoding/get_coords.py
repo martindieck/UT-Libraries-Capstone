@@ -11,17 +11,15 @@ from get_relative_coords import get_relative_coords # Script to obtain the relat
 field_names = [     # Field names for the final csv
     "unique ID",
     "Project",
-    "Original_Address",
+    "Street address",
     "City",
     "County",
-    "State",
+    "State/Province",
     "Country",
-    "Relative_Latitude",
-    "Relative_Longitude",
+    "Coordinates (relative)",
     "Relative_Flag",
-    "Generated_Address",
-    "Exact_Latitude",
-    "Exact_Longitude",
+    "Street address (normalized)",
+    "Coordinates (normalized)",
     "Exact_Flag",
     "Validation",
     "Notes"
@@ -68,17 +66,15 @@ def main(filename, output_location, api_key, relative_locations_directory):
         #Setting Final CSV Fields
         row_dict["unique ID"] = unique_id
         row_dict["Project"] = project_name
-        row_dict["Original_Address"] = original_address
+        row_dict["Street address"] = original_address
         row_dict["City"] = city
         row_dict["County"] = county
-        row_dict["State"] = state
+        row_dict["State/Province"] = state
         row_dict["Country"] = country
-        row_dict["Relative_Latitude"] = relative_latitude
-        row_dict["Relative_Longitude"] = relative_longitude
+        row_dict["Coordinates (relative)"] = relative_latitude + ', ' + relative_longitude
         row_dict["Relative_Flag"] = relative_flag
-        row_dict["Generated_Address"] = generated_address
-        row_dict["Exact_Latitude"] = exact_latitude
-        row_dict["Exact_Longitude"] = exact_longitude
+        row_dict["Street address (normalized)"] = generated_address
+        row_dict["Coordinates (normalized)"] = exact_latitude + ', ' + exact_longitude
         row_dict["Exact_Flag"] = exact_flag
         row_dict["Validation"] = ""
         row_dict["Notes"] = ""
