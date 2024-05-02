@@ -150,7 +150,6 @@ if __name__ == '__main__':
     main()
 
 
-
 import pandas as pd
 import os
 from datetime import datetime
@@ -170,27 +169,27 @@ def merge_csv_files(params, initial_csv, csv_dir):
                          'Date on drawings', 'Date normalized', 'Media', 'Material types:', 'Processor',
                          'Processing completion date', 'Entry date:', 'Rev. date:', 'Pres. notes:', 'treatment completed A',
                          'treatment completed B', 'treatment completed C', 'treatment completed D', 'treatment completed E',
-                         'Accession #', 'Holding institution'],
+                         'Accession #', 'Holding institution:'],
         'Media.csv': ['coll code', 'Collection', 'Project name', 'Project number', 'Street address', 'City', 'County',
                       'State/Province', 'Country', 'FAST Geographic', 'Primary archt/firm', 'Collaborators:', 'Client',
                       'Contributor notes', 'Notes', 'Number of items', 'AAA box #', 'AAA folder #', 'AAA roll #',
                       'Date on drawings', 'Date normalized', 'Material types:', 'Set type', 'Processor',
                       'Processing completion date', 'Entry date:', 'Rev. date:', 'Pres. notes:', 'treatment completed A',
                       'treatment completed B', 'treatment completed C', 'treatment completed D', 'treatment completed E',
-                      'Accession #', 'Holding institution'],
+                      'Accession #', 'Holding institution:'],
         'Material_type.csv': ['coll code', 'Collection', 'Project name', 'Project number', 'Street address', 'City', 'County',
                               'State/Province', 'Country', 'FAST Geographic', 'Primary archt/firm', 'Collaborators:', 'Client',
                               'Contributor notes', 'Notes', 'Number of items', 'AAA box #', 'AAA folder #', 'AAA roll #',
                               'Date on drawings', 'Date normalized', 'Media', 'Set type', 'Processor',
                               'Processing completion date', 'Entry date:', 'Rev. date:', 'Pres. notes:', 'treatment completed A',
                               'treatment completed B', 'treatment completed C', 'treatment completed D', 'treatment completed E',
-                              'Accession #', 'Holding institution']
+                              'Accession #', 'Holding institution:']
     }
 
     # Load the initial CSV file
     # Load the initial CSV file
     try:
-        df_main = pd.read_csv(initial_csv, usecols=['unique ID', 'coll code', 'Collection','AAA box #','AAA folder #','AAA roll #','Accession #','Contributor notes','Date normalized','Date on drawings','FAST Geographic','Number of items','Pres. notes:','Processing completion date','Processor','Project number','State/Province','Street address','treatment completed A','treatment completed B','treatment completed C','treatment completed D','treatment completed E'])
+        df_main = pd.read_csv(initial_csv, usecols=['unique ID', 'coll code', 'Collection','Holding institution:','AAA box #','AAA folder #','AAA roll #','Accession #','Contributor notes','Date normalized','Date on drawings','FAST Geographic','Number of items','Pres. notes:','Processing completion date','Processor','Project number','State/Province','Street address','treatment completed A','treatment completed B','treatment completed C','treatment completed D','treatment completed E'])
         df_main = df_main.loc[:, ~df_main.columns.str.contains('Unnamed')]
         log_message(params, "Loaded initial CSV file successfully.")
     except Exception as e:
@@ -247,4 +246,3 @@ initial_csv_base = os.path.basename(config_values['INPUT']).replace('.xlsx', '.c
 initial_csv = os.path.join(config_values['TEMP'], initial_csv_base)
 csv_dir = config_values['TEMP']
 merge_csv_files(config_values, initial_csv, csv_dir)
-
