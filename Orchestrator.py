@@ -190,7 +190,7 @@ def merge_csv_files(params, initial_csv, csv_dir):
     # Load the initial CSV file
     # Load the initial CSV file
     try:
-        df_main = pd.read_csv(initial_csv, usecols=['unique ID', 'coll code', 'Collection'])
+        df_main = pd.read_csv(initial_csv, usecols=['unique ID', 'coll code', 'Collection','AAA box #','AAA folder #','AAA roll #','Accession #','Contributor notes','Date normalized','Date on drawings','FAST Geographic','Number of items','Pres. notes:','Processing completion date','Processor','Project number','State/Province','Street address','treatment completed A','treatment completed B','treatment completed C','treatment completed D','treatment completed E'])
         df_main = df_main.loc[:, ~df_main.columns.str.contains('Unnamed')]
         log_message(params, "Loaded initial CSV file successfully.")
     except Exception as e:
@@ -247,3 +247,4 @@ initial_csv_base = os.path.basename(config_values['INPUT']).replace('.xlsx', '.c
 initial_csv = os.path.join(config_values['TEMP'], initial_csv_base)
 csv_dir = config_values['TEMP']
 merge_csv_files(config_values, initial_csv, csv_dir)
+
