@@ -22,7 +22,7 @@ field_names = [     # Field names for the final csv
     "Coordinates (normalized)",
     "Exact_Flag",
     "Validation",
-    "Notes"
+    "Notes (app)"
 ]
 
 geocoded_collection = [] # Empty list to store intermediate values for csv generation
@@ -77,7 +77,7 @@ def main(filename, output_location, api_key, relative_locations_directory):
         row_dict["Coordinates (normalized)"] = exact_latitude + ', ' + exact_longitude
         row_dict["Exact_Flag"] = exact_flag
         row_dict["Validation"] = ""
-        row_dict["Notes"] = ""
+        row_dict["Notes (app)"] = ""
         geocoded_collection.append(row_dict)
 
     #Generating final csv using collection code as name
