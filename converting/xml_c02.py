@@ -102,14 +102,20 @@ def add_control_access_and_notes(c02, row):
 
     # Define note fields and append note elements to 'c02'
     notes_fields = ['City', 'County', 'State/Province', 'Country', 'Street address',
-                    'Street address normalized', 'Coordinates', 'Relative_Coordinates', 'Project number', 'Number of items',
-                    'Notes', 'Accession #', 'Processor', 'Entry date normalized',
-                    'Rev. date normalized', 'unique ID']
+                    'Street address normalized', 'Coordinates (normalized)', 'Coordinates (relative)', 'Project number', 'Number of items',
+                    'Notes', 'Accession #', 'Processor', 'Entry_date_normalized',
+                    'Rev_date_normalized']
     for field in notes_fields:
         note = Element('note')
         c02.append(note)
         note_text = f"{field}: {safe_str(row.get(field, 'N/A'))}"
         add_elements(note, 'p', [{'text': note_text}])
+
+    # Manage 'unique ID' separately due to its special prefix.
+    note = Element('note')
+    c02.append(note)
+    note_text = f"AAA Projects Database Unique ID: {safe_str(row.get('unique ID', 'N/A'))}"
+    add_elements(note, 'p', [{'text': note_text}])
 
 
 def create_c02(row):

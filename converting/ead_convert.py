@@ -72,7 +72,7 @@ def save_xml_to_file(xml_str, folder_path):
 
 
 # Load the spreadsheet
-spreadsheet_path = 'converting/source_files/AAA-Fehr and Granger merged 0418.xlsx'
+spreadsheet_path = 'converting/AAA_Proj_db_20231019-MSITM_Architech_ouput (2).xlsx'
 df = pd.read_excel(spreadsheet_path)
 
 # Generate XML using the create_full_xml_from_row function
