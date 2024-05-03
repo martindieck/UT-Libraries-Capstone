@@ -71,10 +71,10 @@ def main(filename, output_location, api_key, relative_locations_directory):
         row_dict["County"] = county
         row_dict["State/Province"] = state
         row_dict["Country"] = country
-        row_dict["Coordinates (relative)"] = relative_latitude + ', ' + relative_longitude
+        row_dict["Coordinates (relative)"] = str(relative_latitude) + ', ' + str(relative_longitude)
         row_dict["Relative_Flag"] = relative_flag
         row_dict["Street address (normalized)"] = generated_address
-        row_dict["Coordinates (normalized)"] = exact_latitude + ', ' + exact_longitude
+        row_dict["Coordinates (normalized)"] = str(exact_latitude) + ', ' + str(exact_longitude)
         row_dict["Exact_Flag"] = exact_flag
         row_dict["Validation"] = ""
         row_dict["Notes (app)"] = ""
