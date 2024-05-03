@@ -29,7 +29,7 @@ max_cols = df_split.shape[1]
 # Create new column names based on the maximum number of columns
 new_ori_cols = [f'Material types[original][{i+1}]' for i in range(max_cols)]
 new_cols = [f'Material types[standard][{i+1}]' for i in range(max_cols)]
-new_src_cols = [f'Material types[src][{i+1}]' for i in range(max_cols)]
+new_src_cols = [f'Material types[standard]_src[{i+1}]' for i in range(max_cols)]
 new_flag_cols = [f'Material types[{i+1}][flag]' for i in range(max_cols)]
 
 # Rename the columns
