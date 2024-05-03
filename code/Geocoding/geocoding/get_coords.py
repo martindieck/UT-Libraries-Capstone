@@ -63,6 +63,16 @@ def main(filename, output_location, api_key, relative_locations_directory):
             address = ", ".join(address_list)
             generated_address, exact_latitude, exact_longitude, exact_flag = geocode_complete(address, api_key) # Obtain address, latitude, longitude and flag from geocoding process
 
+        if relative_latitude == "" or relative_longitude == "":
+            relative_separator = ""
+        else:
+            relative_separator = ", "
+
+        if exact_latitude == "" or exact_longitude == "":
+            exact_separator = ""
+        else:
+            exact_separator = ", "
+
         #Setting Final CSV Fields
         row_dict["unique ID"] = unique_id
         row_dict["Project"] = project_name
@@ -71,10 +81,10 @@ def main(filename, output_location, api_key, relative_locations_directory):
         row_dict["County"] = county
         row_dict["State/Province"] = state
         row_dict["Country"] = country
-        row_dict["Coordinates (relative)"] = str(relative_latitude) + ', ' + str(relative_longitude)
+        row_dict["Coordinates (relative)"] = str(relative_latitude) + relative_separator + str(relative_longitude)
         row_dict["Relative_Flag"] = relative_flag
         row_dict["Street address (normalized)"] = generated_address
-        row_dict["Coordinates (normalized)"] = str(exact_latitude) + ', ' + str(exact_longitude)
+        row_dict["Coordinates (normalized)"] = str(exact_latitude) + exact_separator + str(exact_longitude)
         row_dict["Exact_Flag"] = exact_flag
         row_dict["Validation"] = ""
         row_dict["Notes (app)"] = ""
