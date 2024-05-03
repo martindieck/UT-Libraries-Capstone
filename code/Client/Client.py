@@ -290,6 +290,7 @@ def main():
     current_directory = os.getcwd()
 
     settings = read_settings(current_directory + '/_config.ini')
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + current_directory)
     print(settings)
     use_llm = settings[0]['use_llm']
 

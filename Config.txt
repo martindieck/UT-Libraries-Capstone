@@ -1,10 +1,10 @@
-COLLECTION='Fehr and Granger collection'
+COLLECTION='*'
 ###Expected values: '*' for all collections, 'Collection1, Collection2' for two specific collections, or 'CollectionN' for one specific collection  
 
-INPUT='C:\Users\angel\OneDrive\Desktop\Capstone\Orchestrator\input\AAA_Proj_db_20231222.xlsx'
-OUTPUT='C:\Users\angel\OneDrive\Desktop\Capstone\Orchestrator\output\AAA_Proj_db_20231019-MSITM_Architech_ouput.xlsx'
-LOG='C:\Users\angel\OneDrive\Desktop\Capstone\Orchestrator\logs\orchestrator.log'
-TEMP='C:\Users\angel\OneDrive\Desktop\Capstone\Orchestrator\temp'
-CODE='C:\Users\angel\OneDrive\Desktop\Capstone\Orchestrator\code'
-GOOGLEKEY='key'
-GPTKEY='key'
+INPUT='/Users/williamdang/Downloads/Finetune/deliverable/UT-Libraries-Capstone/input/AAA_Proj_db_20231222.xlsx'
+OUTPUT='/Users/williamdang/Downloads/Finetune/deliverable/UT-Libraries-Capstone/output/AAA_Proj_db_20231019-MSITM_Architech_ouput.xlsx'
+LOG='/Users/williamdang/Downloads/Finetune/deliverable/UT-Libraries-Capstone/logs/Orchestrator.log'
+TEMP='/Users/williamdang/Downloads/Finetune/deliverable/UT-Libraries-Capstone/temp'
+CODE='/Users/williamdang/Downloads/Finetune/deliverable/UT-Libraries-Capstone/code'
+GOOGLEKEY=''
+GPTKEY=''

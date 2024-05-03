@@ -1,6 +1,7 @@
-config_file_path = r'C:\Users\angel\OneDrive\Desktop\Capstone\Orchestrator\Config.txt'
-
 import os
+current_directory = os.getcwd()
+config_file_path = current_directory + '/Config.txt'
+
 from datetime import datetime
 import pandas as pd
 
@@ -84,6 +85,7 @@ print(f"Filtered data saved to CSV at: {csv_file_path}")
 
 import os
 import subprocess
+from pathlib import Path
 from datetime import datetime
 
 def log_message(params, message):
@@ -93,54 +95,99 @@ def log_message(params, message):
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         log_file.write(f"{timestamp} - {message}\n")
 
+# def execute_scripts_from_config_code(params, config_code_path):
+#     """Reads script configuration and executes each script only if output file does not exist, logging each execution."""
+#     code_dir = params['CODE']
+#     temp_path = params['TEMP']
+#     input_csv_basename = os.path.basename(params['INPUT']).replace('.xlsx', '.csv')
+#     input_csv = os.path.join(temp_path, input_csv_basename)
+#     current_dir = os.getcwd()  # Save the current directory
+
+#     with open(config_code_path, 'r') as file:
+#         for line in file:
+#             if line.strip():
+#                 script_rel_path, output_file_name = line.strip().split(',')
+#                 script_path = os.path.join(code_dir, script_rel_path)
+#                 output_csv = os.path.join(temp_path, output_file_name)
+
+#                 # Check if the output file already exists
+#                 if os.path.exists(output_csv):
+#                     log_message(params, f"Skipped: {script_path} - Output file already exists: {output_csv}")
+#                     print(f"Skipped: {script_path} - Output file already exists: {output_csv}")
+#                     continue
+
+#                 # Prepare command based on specific script handling
+#                 if 'get_coords.py' in script_path:
+#                     google_key = params['GOOGLEKEY']
+#                     additional_path = os.path.join(os.path.dirname(os.path.dirname(code_dir)), 'Geocoding', 'relative_locations.csv')
+#                     command = f'python "{script_path}" "{input_csv}" "{output_csv}" "{google_key}" "{additional_path}"'
+#                 elif script_path.endswith(('Materialtype.py', 'Media.py', 'Settype.py')):
+#                     mapped_genre_form_path = os.path.join(code_dir, 'Material_Media_Set', 'Mapped_genre_form.xlsx')
+#                     command = f'python "{script_path}" "{input_csv}" "{mapped_genre_form_path}" "{output_csv}"'
+#                 elif 'Client.py' in script_path:
+#                     gpt_key = params['GPTKEY']
+#                     os.chdir(os.path.dirname(script_path))  # Change directory to the script's directory
+#                     command = f'python "{os.path.basename(script_path)}" "{input_csv}" "{output_csv}" "{gpt_key}"'
+#                 else:
+#                     command = f'python "{script_path}" "{input_csv}" "{output_csv}"'
+                
+#                 try:
+#                     print(f"Executing: {command}")
+#                     subprocess.run(command, check=True, shell=True)
+#                     print("Execution successful.")
+#                     log_message(params, f"Executed: {command} - Success")
+#                 except subprocess.CalledProcessError as e:
+#                     print(f"Failed to execute script: {script_path}")
+#                     print("Error:", e)
+#                     log_message(params, f"Failed to execute script: {script_path} - Error: {e}")
+#                 finally:
+#                     if 'Client.py' in script_path:
+#                         os.chdir(current_dir)  # Change back to the original directory
+
 def execute_scripts_from_config_code(params, config_code_path):
-    """Reads script configuration and executes each script only if output file does not exist, logging each execution."""
-    code_dir = params['CODE']
-    temp_path = params['TEMP']
-    input_csv_basename = os.path.basename(params['INPUT']).replace('.xlsx', '.csv')
-    input_csv = os.path.join(temp_path, input_csv_basename)
-    current_dir = os.getcwd()  # Save the current directory
+    """Reads script configuration and executes each script only if the output file does not exist, logging each execution."""
+    code_dir = Path(params['CODE'])
+    temp_path = Path(params['TEMP'])
+    input_csv_basename = Path(params['INPUT']).with_suffix('.csv').name
+    input_csv = temp_path / input_csv_basename
+    current_dir = os.getcwd()  # Save the current directory using os.getcwd()
 
     with open(config_code_path, 'r') as file:
         for line in file:
             if line.strip():
-                script_rel_path, output_file_name = line.strip().split(',')
-                script_path = os.path.join(code_dir, script_rel_path)
-                output_csv = os.path.join(temp_path, output_file_name)
+                script_rel_path, output_file_name = map(str.strip, line.split(','))
+                script_path = code_dir / script_rel_path.replace('\\', '/')
+                output_csv = temp_path / output_file_name
 
                 # Check if the output file already exists
-                if os.path.exists(output_csv):
+                if output_csv.exists():
                     log_message(params, f"Skipped: {script_path} - Output file already exists: {output_csv}")
-                    print(f"Skipped: {script_path} - Output file already exists: {output_csv}")
                     continue
 
                 # Prepare command based on specific script handling
-                if 'get_coords.py' in script_path:
+                if 'get_coords.py' in script_path.name:
                     google_key = params['GOOGLEKEY']
-                    additional_path = os.path.join(os.path.dirname(os.path.dirname(code_dir)), 'Geocoding', 'relative_locations.csv')
+                    additional_path = code_dir.parent.parent / 'Geocoding' / 'relative_locations.csv'
                     command = f'python "{script_path}" "{input_csv}" "{output_csv}" "{google_key}" "{additional_path}"'
-                elif script_path.endswith(('Materialtype.py', 'Media.py', 'Settype.py')):
-                    mapped_genre_form_path = os.path.join(code_dir, 'Material_Media_Set', 'Mapped_genre_form.xlsx')
+                elif script_path.name.endswith(('Materialtype.py', 'Media.py', 'Settype.py')):
+                    mapped_genre_form_path = code_dir / 'Material_Media_Set' / 'Mapped_genre_form.xlsx'
                     command = f'python "{script_path}" "{input_csv}" "{mapped_genre_form_path}" "{output_csv}"'
-                elif 'Client.py' in script_path:
+                elif 'Client.py' in script_path.name:
                     gpt_key = params['GPTKEY']
-                    os.chdir(os.path.dirname(script_path))  # Change directory to the script's directory
-                    command = f'python "{os.path.basename(script_path)}" "{input_csv}" "{output_csv}" "{gpt_key}"'
+                    os.chdir(script_path.parent)  # Change directory to the script's directory
+                    command = f'python "{script_path.name}" "{input_csv}" "{output_csv}" "{gpt_key}"'
                 else:
                     command = f'python "{script_path}" "{input_csv}" "{output_csv}"'
                 
                 try:
-                    print(f"Executing: {command}")
                     subprocess.run(command, check=True, shell=True)
-                    print("Execution successful.")
                     log_message(params, f"Executed: {command} - Success")
                 except subprocess.CalledProcessError as e:
-                    print(f"Failed to execute script: {script_path}")
-                    print("Error:", e)
                     log_message(params, f"Failed to execute script: {script_path} - Error: {e}")
                 finally:
-                    if 'Client.py' in script_path:
-                        os.chdir(current_dir)  # Change back to the original directory
+                    if 'Client.py' in script_path.name:
+                        os.chdir(current_dir)  # Change back to the original directory if necessary
+
 
 def main():
     config_code_path = os.path.join(config_values['CODE'], 'Config_code.txt')
@@ -153,6 +200,7 @@ if __name__ == '__main__':
 import pandas as pd
 import os
 from datetime import datetime
+import subprocess
 
 def log_message(params, message):
     log_path = params['LOG']
