@@ -92,23 +92,23 @@ max_collaborators = data['Structured Collaborators'].apply(len).max()
 
 # Add new columns to the original dataframe for each collaborator's details
 for i in range(max_collaborators):
-    data[f'Collaborators[{i+1}][Name]'] = data['Structured Collaborators'].apply(
+    data[f'Collaborator[{i+1}][Name]'] = data['Structured Collaborators'].apply(
         lambda x: x[i]['Name'] if i < len(x) else None)
-    data[f'Collaborators[{i+1}][Type]'] = data['Structured Collaborators'].apply(
+    data[f'Collaborator[{i+1}][Type]'] = data['Structured Collaborators'].apply(
         lambda x: x[i]['Type'] if i < len(x) else None)
-    data[f'Collaborators[{i+1}][Role]'] = data['Structured Collaborators'].apply(
+    data[f'Collaborator[{i+1}][Role]'] = data['Structured Collaborators'].apply(
         lambda x: x[i]['Role'] if i < len(x) else None)
-    data[f'Collaborators[{i+1}]_flag'] = data['Structured Collaborators'].apply(
+    data[f'Collaborator[{i+1}]_flag'] = data['Structured Collaborators'].apply(
         lambda x: x[i]['Flag'] if i < len(x) else None)
 
 # Selecting only specified columns
 output_columns = ['unique ID', 'Collaborators:']
 for i in range(max_collaborators):
     output_columns.extend([
-        f'Collaborators[{i+1}][Name]',
-        f'Collaborators[{i+1}][Type]',
-        f'Collaborators[{i+1}][Role]',
-        f'Collaborators[{i+1}]_flag'
+        f'Collaborator[{i+1}][Name]',
+        f'Collaborator[{i+1}][Type]',
+        f'Collaborator[{i+1}][Role]',
+        f'Collaborator[{i+1}]_flag'
     ])
 
 final_output = data[output_columns]
