@@ -226,6 +226,37 @@ def merge_csv_files(params, initial_csv, csv_dir):
                 print(error_msg)
                 log_message(params, error_msg)
 
+# ----
+    # Initialize empty strings to store information
+    columns_deleted = ""
+    columns_renamed = ""
+
+    # Step 1: Identify columns ending with '_x'
+    columns_to_drop = [col for col in df_main.columns if col.endswith('_x')]
+
+    # Step 2: Drop columns ending with '_x' and store their names
+    if columns_to_drop:
+        df_main.drop(columns=columns_to_drop, inplace=True)
+        columns_deleted = ", ".join(columns_to_drop)
+
+    # Step 3: Rename columns ending with '_y' by removing the '_y' suffix
+    renamed_columns = {}
+    for col in df_main.columns:
+        if col.endswith('_y'):
+            new_col_name = col.rstrip('_y')
+            df_main.rename(columns={col: new_col_name}, inplace=True)
+            renamed_columns[col] = new_col_name
+            columns_renamed += f"{col} -> {new_col_name}, "
+
+    # Remove trailing comma and space from columns_renamed string
+    columns_renamed = columns_renamed.rstrip(", ")
+
+
+    # Print or use the strings as per your requirement
+    print("Deleted columns:", columns_deleted)
+    print("Renamed columns:", columns_renamed)
+
+#----
     # Save the merged DataFrame to Excel
     # Save the merged DataFrame to Excel
     output_excel_path = params['OUTPUT']  # Directly using the OUTPUT path as specified
