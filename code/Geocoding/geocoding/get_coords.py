@@ -49,7 +49,7 @@ def main(filename, output_location, api_key, relative_locations_directory):
         try:
             relative_latitude, relative_longitude, relative_flag = get_relative_coords(lookup_value, relative_locations_directory)
         except:
-            relative_latitude, relative_longitude, relative_flag = "", "", 0 # If no values are found, fill the coordinates with empty strings and flag the row
+            relative_latitude, relative_longitude, relative_flag = "NO VAL", "NO VAL", 0 # If no values are found, fill the coordinates with empty strings and flag the row
 
         # Initiating Geocoding process if there is any information at all
         if original_address == "" and city == "" and state == "" and county == "" and country == "":
