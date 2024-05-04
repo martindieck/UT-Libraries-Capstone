@@ -8,5 +8,3 @@ Material_Media_Set\Materialtype.py,Material_type.csv
 Material_Media_Set\Media.py,Media.csv
 Material_Media_Set\Settype.py,Set_type.csv
 Project_name\Project_name.py,Project_name.csv
-
-
