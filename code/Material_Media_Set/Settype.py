@@ -61,7 +61,7 @@ for col, src in zip(new_cols, new_src_cols):
 
         if val in df_map2['Set types from Project DB'].values:
             idx = df_map2[df_map2['Set types from Project DB'] == val].index[0]
-            if df_test.at[index, src] is not " ":
+            if df_test.at[index, src] != " ":
                 df_test.at[index, col] = df_map2.loc[df_map2['Set types from Project DB'] == val, 'genreform'].iloc[0]
                 df_test.at[index, src] = df_map2.loc[df_map2['Set types from Project DB'] == val, 'authority'].iloc[0]
                 #if pd.notna(df_map2.loc[idx, 'genreform2']):

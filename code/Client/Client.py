@@ -224,13 +224,13 @@ def update_dataframe_from_llm(df, index, entry, processed_data, all_corp_rules, 
     if "Flag" in processed_data:
         if debug:
             print(f"Warning: {processed_data['Flag']} for row {index}")
-        df.at[index, 'Client1[Name]'] = entry  # Use the original entry if there's an issue
-        df.at[index, 'Client1[Type]'] = 'corporate'  # Default type if processing failed
-        df.at[index, 'Client1_flag'] = 1  # Flag this entry as problematic
+        df.at[index, 'Client[1][Name]'] = entry  # Use the original entry if there's an issue
+        df.at[index, 'Client[1][Type]'] = 'corporate'  # Default type if processing failed
+        df.at[index, 'Client[1]_flag'] = 1  # Flag this entry as problematic
     else:
         for idx in range(1, len(processed_data)//2 + 1):  # Determine how many entities there are
-            name_key = f'Client{idx}[Name]'
-            type_key = f'Client{idx}[Type]'
+            name_key = f'Client[{idx}][Name]'
+            type_key = f'Client[{idx}][Type]'
             name = processed_data[name_key]
             entity_type = processed_data[type_key]
 
@@ -240,10 +240,10 @@ def update_dataframe_from_llm(df, index, entry, processed_data, all_corp_rules, 
             # Check if the entity should be flagged based on its type
             if entity_type == "corporate":
                 if contains_any_flag(name, all_corp_rules):
-                    df.at[index, f'Client{idx}_flag'] = 1
+                    df.at[index, f'Client[{idx}]_flag'] = 1
             elif entity_type == "person":
                 if contains_any_flag(name, [persons_name_flags]):
-                    df.at[index, f'Client{idx}_flag'] = 1
+                    df.at[index, f'Client[{idx}]_flag'] = 1
             if debug:
                 print(f"Updated row {index} with {name} as {entity_type}")
 
@@ -253,8 +253,8 @@ def process_json(output_json):
         data = json.loads(output_json)
         entity_dict = {}
         for idx, (name, entity_type) in enumerate(data.items(), start=1):
-            entity_dict[f'Client{idx}[Name]'] = name
-            entity_dict[f'Client{idx}[Type]'] = entity_type
+            entity_dict[f'Client[{idx}][Name]'] = name
+            entity_dict[f'Client[{idx}][Type]'] = entity_type
         return entity_dict
     except json.JSONDecodeError:
         return {"Flag": "Invalid JSON Format"}
@@ -290,6 +290,7 @@ def main():
     current_directory = os.getcwd()
 
     settings = read_settings(current_directory + '/_config.ini')
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + current_directory)
     print(settings)
     use_llm = settings[0]['use_llm']
 
@@ -313,9 +314,9 @@ def main():
     # Initialize potential dynamic columns
     max_entity_count = 10
     for i in range(1, max_entity_count+1):
-        df[f'Client{i}[Name]'] = None
-        df[f'Client{i}[Type]'] = None
-        df[f'Client{i}_flag'] = 0
+        df[f'Client[{i}][Name]'] = None
+        df[f'Client[{i}][Type]'] = None
+        df[f'Client[{i}]_flag'] = 0
 
     # List of dictionaries to check against
     all_corp_rules = [corp_indicators, known_corps, corporate_name_flags, uncertain_original_data]
@@ -332,21 +333,21 @@ def main():
         elif contains_any_flag(curr_entry, all_corp_rules):
             # Flag any known problems with the corpname
             if contains_any_flag(curr_entry, [corporate_name_flags, uncertain_original_data], debug=False):
-                df.at[index, 'Client1_flag'] = 1
-            df.at[index, 'Client1[Name]'] = row['Client']
-            df.at[index, 'Client1[Type]'] = 'corporate'
+                df.at[index, 'Client[1]_flag'] = 1
+            df.at[index, 'Client[1][Name]'] = row['Client']
+            df.at[index, 'Client[1][Type]'] = 'corporate'
 
         # If not cleaned with predefined rules, check the data for a rule
         else:
             if check_ands(curr_entry):
-                df.at[index, 'Client1_flag'] = 1
-                df.at[index, 'Client1[Name]'] = curr_entry
-                df.at[index, 'Client1[Type]'] = 'corporate'
+                df.at[index, 'Client[1]_flag'] = 1
+                df.at[index, 'Client[1][Name]'] = curr_entry
+                df.at[index, 'Client[1][Type]'] = 'corporate'
 
             elif check_single_word(curr_entry):
-                df.at[index, 'Client1_flag'] = 1
-                df.at[index, 'Client1[Name]'] = curr_entry
-                df.at[index, 'Client1[Type]'] = 'corporate'
+                df.at[index, 'Client[1]_flag'] = 1
+                df.at[index, 'Client[1][Name]'] = curr_entry
+                df.at[index, 'Client[1][Type]'] = 'corporate'
 
             # clean with llm
             else:
@@ -357,18 +358,18 @@ def main():
                         processed_data = process_json(json_output)
                         update_dataframe_from_llm(df, index, curr_entry, processed_data, all_corp_rules, persons_name_flags)
                     else:
-                        df.at[index, 'Client1[Name]'] = curr_entry
-                        df.at[index, 'Client1[Type]'] = 'corporate'
-                        df.at[index, 'Client1_flag'] = 1
+                        df.at[index, 'Client[1][Name]'] = curr_entry
+                        df.at[index, 'Client[1][Type]'] = 'corporate'
+                        df.at[index, 'Client[1]_flag'] = 1
 
     print("LLM API called" , api_counter , "times.")
 
-    # Remove columns if the entire [Name] column is empty
+    # Remove columns if the entire [#][Name] column is empty
     for i in range(1, max_entity_count+1):
-        if df[f'Client{i}[Name]'].isna().all():
-            del df[f'Client{i}[Name]']
-            del df[f'Client{i}[Type]']
-            del df[f'Client{i}_flag']
+        if df[f'Client[{i}][Name]'].isna().all():
+            del df[f'Client[{i}][Name]']
+            del df[f'Client[{i}][Type]']
+            del df[f'Client[{i}]_flag']
 
     # Flag omen's names
     use_womens_names = settings[1]['flag_columns_for_review']
